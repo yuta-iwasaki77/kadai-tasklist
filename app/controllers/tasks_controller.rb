@@ -1,16 +1,6 @@
 class TasksController < ApplicationController
     before_action :set_task, only: [:show, :edit, :update, :destroy]
- 
-   private
 
-  # Strong Parameter
-  def task_params
-    params.require(:task).permit(:content, :status)
-  end
-  
-  def set_task
-    @task = Task.find(params[:id])
-  end
  
   def index
       @tasks=Task.all
@@ -58,7 +48,17 @@ class TasksController < ApplicationController
     redirect_to tasks_url
   end
   
+ 
+   private
 
+  # Strong Parameter
+  def task_params
+    params.require(:task).permit(:content, :status)
+  end
+  
+  def set_task
+    @task = Task.find(params[:id])
+  end
 
   
 end
