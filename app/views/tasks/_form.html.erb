@@ -1,5 +1,6 @@
-<%= form_with(model: status, local: true) do |f| %>
-  <% if status.errors.any? %>
+<%= form_with(model: task, local: true) do |f| %>
+   
+   <% if task.status.any? %>
     <div id="error_explanation">
       <ul>
         <% status.errors.full_statuses.each do |sta| %>
