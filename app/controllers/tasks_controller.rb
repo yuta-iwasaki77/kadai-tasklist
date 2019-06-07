@@ -1,10 +1,10 @@
 class TasksController < ApplicationController
-
+    before_action :set_task, only: [:show, :edit,]
     before_action :require_user_logged_in
-    before_action :correct_user, only: [:destroy]
+    before_action :correct_user, only: [:edit, :update, :destroy]
  
   def index
-      @tasks=Task.all
+      @tasks = current_user.tasks
   end
 
   def show
@@ -22,7 +22,7 @@ class TasksController < ApplicationController
     else
       @tasks = current_user.tasks.order(id: :desc).page(params[:page])
       flash.now[:danger] = 'Taskの投稿に失敗しました。'
-      render 'toppages/index'
+      render :new
     end
   end
 
@@ -42,9 +42,11 @@ class TasksController < ApplicationController
   end
 
   def destroy
-  @task.destroy
-    flash[:success] = 'Taskを削除しました。'
-    redirect_back(fallback_location: root_path)
+  @task = Task.find(params[:id])
+    @task.destroy
+
+    flash[:success] = 'Taskは正常に削除されました'
+    redirect_to tasks_url
   end
   
  
